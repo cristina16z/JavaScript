@@ -72,7 +72,10 @@ console.log(producto)
 
 
 
-/********************************Objetos - Destructuring de 2 o más objetos******************/
+
+
+/********************************Objetos - Destructuring de 2 o más objetos************************************/
+
 
 const producto = {
     nombre:"tablet",
@@ -101,7 +104,8 @@ console.log(calle) //accede al valor de calle (entra al obj y luego a calle) -->
 
 
 
-/********************************UNIR 2 O MÁS OBJETOS*******************/
+/*********************************************UNIR 2 O MÁS OBJETOS**********************************************/
+
 
 const producto = {
     nombre:"tablet",
@@ -166,6 +170,7 @@ console.log(` ${producto} $${precio} Dolares: marca ${marca}`)
 
 
 /*****************************************************************ARRAYS***********************************************************/
+
 
 const tecnologias = [20, 30, 40, true, "Portátil"]
 console.table(tecnologias)
@@ -251,8 +256,6 @@ for(let tech of tecnologias){
 
 
 
-
-
 /*************************************************FUNCIONES**************************************************/
 
 
@@ -305,4 +308,192 @@ const sumar = (numero1=0, numero2=0) => numero1+numero2
 
 
 
-/***ARRAYS METHODS */
+
+/********************************************************ARRAYS METHODS *****************************************/
+
+
+//sin arrow function
+const tecnologias2 = tecnologias.filter(function(tech){
+    //console.log(tech)
+    if(tech === 'HTML'{
+        return tech
+    })
+})
+
+//con arrow function: filtrar sólo etiqueta html
+const nuevoArray = tecnologias.filtrer((tech) =>  tech === 'HTML')
+
+//ejemplo2: filtrar diferente a 10
+const numeros = [10,20,30]
+const resultado = numeros.filtrer(numero => numero !== 10)
+
+
+
+//INCLUDES. si existe un elemento en el array
+const resultado = tecnologias.includes('CSS')
+
+
+//SOME - Devuelve si alemnos uno cumple la condición. true or false
+const resultado = numeros.some(numero => numero > 15)
+if(resultado){
+    console.log('si hay elementos')
+}else{
+    console.log('no hay elementos')
+}
+
+
+//FIND - Devuelve el primer elemento que cumple la condición
+const resultado = numeros.find(numero => numero > 15)   
+
+
+//EVERY - Retorna true or false si todos cumplen la condición
+const resultado = numeros.every(numero => numero > 5)
+
+
+//REDUCE - Retorna un acumulado total (el 0 es el valor inicial)
+const resultado = numeros.reduce((total, numero) => total + numero, 0)
+
+
+
+
+/******************************************************CONDICIONALES *****************************************/
+
+
+const auth = true
+
+if (!auth){//si es false
+    console.log('No tienes permiso, inicia sesión')
+
+}else{//sino, siendo true:
+    console.log('Acceso al sistema...')
+}
+
+/**operadores
+ * >
+ * <
+ * >=
+ * <=
+ * ==   sólo revisa si los valores son iguales y no su tipo de dato. ej: el num 20 & string "20" -> true
+ * ===  igual estricto. revisa si es igual su valor y su tipo de dato. en el ejemplo -> false
+ * !==  diferente a
+ * ||   or
+ * &&   and
+ * 
+ */
+
+
+
+//OPERADORES TERNARIOS
+const saldo = 2000
+const pagar = 1200
+const tarjeta = true
+
+/*en vez de tener
+
+if (saldo > pagar){
+    console.log('Sí puedes pagar')
+}else{
+    console.log('No puedes pagar')
+}
+
+se pone la [condición] seguido entonces [?] [si es true/se cumple] : [sino false]
+
+ej sencillo*/
+saldo > pagar ?
+    console.log('Sí puedes pagar') : 
+    console.log('No, no puedes pagar') 
+
+//ejemplo2 
+saldo > pagar ?
+    console.log('Sí puedes pagar') : 
+    tarjeta ?
+        console.log('Puedes pagar con tarjeta') :
+        console.log('No, no puedes pagar') 
+
+//ejemplo simplificado
+saldo > pagar || tarjeta ?
+    console.log('Sí puedes pagar') : 
+    console.log('No, no puedes pagar') 
+
+
+
+//OPTIONAL CHAINING (?)                 Mira si existe, sino pasará
+
+const alumno = {
+    nombre: 'Juan'
+    clase: 'Programacion 1',
+    aprobado : true,
+    examenes : {
+        examen1: 90
+    }
+}
+
+console.log(alumno.examenes?.examen1)
+console.log('Después')
+
+
+//NULLISH COALESCING OPERATOR (??)       Devuelve el valor de la derecha si:  es nulo o undefined la izquierda y viceversa
+//devolveria 10
+const pagina = 10 ?? 1
+console.log(pagina)
+
+//devolveria 1
+const pagina = null ?? 1
+
+
+
+//EVALUACIÓN DE CORTOCIRCUITO
+//Si cumple la condición, que haga esto. Revisar una condición y ejecutar un código
+const auth = true
+auth && console.log('Usuario autenticado')
+
+
+
+
+
+/****************************************************ECMAScript***********************************************/
+
+
+/*para en el html tener en 1 sola lína <script><script> 
+los archivos de las funciones creadas y el archivo que se pasan los parametros para llamar a las funciones*/
+
+//archivo html
+<script src="ruta" type="module"> </script>
+
+
+//Archivo exportar funciones
+export function sumar(n1, n2){
+    return n1 + n2
+}
+
+export function restar(n1, n2){
+    return n1 - n2
+}
+
+//o export{sumar, restar}
+
+
+//improtar funciones
+import {sumar, restar} from './funciones.js'
+
+const resultado = sumar(10, 20)
+console.log(sumar)
+
+
+/*luego estan los export default dónde a la hora de poner el import [nombreQDeseas], {} from ..
+hay que ponerle un nombre en el import y no hay que ponerlo entre {} la función, ya que es por default
+Sólo puede haber 1 export default
+
+arrow funcitons */
+
+export const sumar = (n1, n2) => n1 + n2
+export const multiplicar = (n1, n2) => n1 * n2
+
+export default multiplicar
+
+
+
+
+/******************************************** FETCH API con PROMISES *********************************************/
+
+
