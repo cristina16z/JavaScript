@@ -496,4 +496,100 @@ export default multiplicar
 
 /******************************************** FETCH API con PROMISES *********************************************/
 
+/*Puede ser con función o sin.
+Accede a una consulta url, si existe, hay respuesta quiero los datos cómo json y los muestra,
+ de lo contrario salta al error con su mensaje */
 
+const url = 'Https://.../comments'
+
+fetch(url)
+    .then((response) => {
+        if(response.ok){
+            return response.json()
+        }
+        throw new Error('Hubo un error')
+    })
+
+    .then(data => console.log(data))
+    .then(error => console.log(error.message))
+
+
+
+
+/******************************************** FETCH API con ASYNC / AWAIT  *********************************************/
+
+
+const consultarAPI = async () => {
+
+    try {
+        const response = await fetch(url)
+        if(!response.ok){
+            throw new Error('Hubo un error')
+        }
+
+        const data = await response.json()
+        console.log(data)
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
+
+/******************************* MEDIR PERFORMANCE & MANEJAR MÚLTIPLES CONSULTAS *********************************************/
+
+
+/*para no tener dentro repeticiones que hacen el código largo ejemplo*/
+
+
+const consultarAPI = async () => {
+
+    try {
+        const inicio = performance.now()
+
+        const response = await fetch(url)
+        const data = await response.json()
+        console.log(data)
+
+        const response2 = await fetch(url2)
+        const data2 = await response2.json()
+        console.log(data2)
+
+        const response3 = await fetch(url3)
+        const data3 = await response3.json()
+        console.log(data3)
+
+
+        const fin = performance.now()
+        console.log(`El resultado és ${fin - inicio} ms`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+//Lo simplificaremos así
+
+const consultarAPI = async () => {
+
+    try {
+        const inicio = performance.now()
+
+        const [response, response2, response3]  = await Promise.all ([fetch(url), fetch(url2), fetch(url3)],)
+        const [data, data2, data3] = await Promise.all ([response.json(), response2.json(), response3.json()])
+
+
+        console.log(data)
+        console.log(data2)
+        console.log(data3)
+
+
+        const fin = performance.now()
+        console.log(`El resultado és ${fin - inicio} ms`)
+    } catch (error) {
+        console.log(error.message)
+    }
+}
