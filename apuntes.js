@@ -74,6 +74,8 @@ console.log(producto)
 
 
 
+
+
 /********************************Objetos - Destructuring de 2 o más objetos************************************/
 
 
@@ -169,7 +171,10 @@ console.log(` ${producto} $${precio} Dolares: marca ${marca}`)
 
 
 
-/*****************************************************************ARRAYS***********************************************************/
+
+
+
+/**********************************************************ARRAYS********************************************************/
 
 
 const tecnologias = [20, 30, 40, true, "Portátil"]
@@ -256,6 +261,9 @@ for(let tech of tecnologias){
 
 
 
+
+
+
 /*************************************************FUNCIONES**************************************************/
 
 
@@ -309,6 +317,9 @@ const sumar = (numero1=0, numero2=0) => numero1+numero2
 
 
 
+
+
+
 /********************************************************ARRAYS METHODS *****************************************/
 
 
@@ -352,6 +363,11 @@ const resultado = numeros.every(numero => numero > 5)
 
 //REDUCE - Retorna un acumulado total (el 0 es el valor inicial)
 const resultado = numeros.reduce((total, numero) => total + numero, 0)
+
+
+
+
+
 
 
 
@@ -451,6 +467,9 @@ auth && console.log('Usuario autenticado')
 
 
 
+
+
+
 /****************************************************ECMAScript***********************************************/
 
 
@@ -538,7 +557,7 @@ const consultarAPI = async () => {
 
 
 
-/******************************* MEDIR PERFORMANCE & MANEJAR MÚLTIPLES CONSULTAS *********************************************/
+/******************************* MEDIR PERFORMANCE & MANEJAR MÚLTIPLES CONSULTAS *************************************/
 
 
 /*para no tener dentro repeticiones que hacen el código largo ejemplo*/
@@ -593,3 +612,186 @@ const consultarAPI = async () => {
         console.log(error.message)
     }
 }
+
+
+
+
+
+
+
+
+
+/******************************* DOM SELECCIONAR ELEMENTOS ************************************************/
+
+
+const heading = document.querySelector('.claseHeading')
+                        .querySelectorAll
+                        .getElementById
+
+console.log(heading) //acceder a los atributos que tiene un elemento
+console.log(heading.tagName) //h1
+console.log(heading.texContent)
+console.log(heading.classList) //ver las clases que tiene dentro
+console.log(heading.id)
+
+//selecciona todos los enlaces <a> que hay dentro de .navegacion
+const enlaces = document.querySelectorAll('.navegacio a')
+
+
+
+
+/******************************* MANIPULAR ELEMENTOS HTML CON JS *******************************************/
+
+
+//cambiar su contexto por otra cosa
+heading.texContent = 'Un nuevo heading...'
+heading.id = 'Nuev id'
+
+//elimina el attributo .class
+heading.removeAttribute('class') 
+
+
+<input type = "text" value="" ></input>
+const inputNombre = document.querySelector('#id')
+inputNombre.value = 'Nuevo valor'
+
+
+//En una colección, para cambiar 1 de los 4 enlaces se hace accediento por una array
+enlaces[0].textContent = 'Nuevo Enlace'
+
+//si se quiere cambiar todos se usará un forEach
+enlaces.forEach(enlace => enlace.textContent = 'Nuevo contxt a todos')
+
+
+
+
+/******************************* EVENTOS DEL DOM - CLICKS  ***********************************************/
+
+
+//cambiar el texto del heading al hacer click
+const heading = document.querySelector('.heading') //seleccionamos
+
+heading.addEventListener('click', () => {          //de los eventos (click) cuando se haga, realizar un arrow function(){}
+    heading.texContent = 'Nuevo txt en el heading'
+})
+
+/*otros eventos: moussenter               (hover), 
+                mouseleave              (para salir) */
+
+
+//cambiar el texto del CONSOLE LOG a una sère de links, una array
+enlaces.forEach(enlace =>{
+    enlace.addEventListener('click', () = {
+            console.log('click en un enlace')
+    })
+})
+
+//(e) es la información sobre el evento que se está llevando a cabo, y vamos a ver info del target
+enlaces.forEach(enlace =>{
+    enlace.addEventListener('click', (e) = {
+            console.log(e)
+            console.log(e.target)
+            
+            //otra cosa
+            e.preventDefault() //los enlaces <a> tienen una accion pro defecto que es visitar en enlace, con esto evitas su acción default
+            e.target.texContent = 'Cambiaste el contxt'
+    })
+})
+
+
+
+
+
+/******************************* EVENTOS DEL DOM - INPUTS  ************************************************/
+
+
+//en la consola ver qué escribe el usuario por ejemplo en una casilla de formulario
+const inputNombre = docuemnt.querySelector('#nombre')
+inputNombre.addEventListener('input', (e) => {
+    console.log(e.target.value)
+    console.log(e.target.value.length) //para ver la extensión de lo que se ha escrito
+})
+
+
+//a la hora de introducir un pw que se muestre al principio y al milisegundo cambie por · para que no se vea
+const inputPassword = document.querySelector('#password')
+inputPassword.addEventListener('input', functionPassword) //otra forma de introducir una función
+function functionPassword(){
+    inputPassword.type = "text"
+
+    setTimeout(() =>{
+        inputPassword.type = 'password'
+    }, 300)
+}
+
+
+
+
+/******************************* EVENTOS DEL DOM - SUBMIT  *************************************************/
+
+
+const formulario = document.querySelector('#formulario')
+formulario.addEventListener('submit', (e) =>{
+    e.preventDefault()
+    //console.log('Enviando Formulario...')
+
+    //validacion
+    const nombre = document.querySelector('#nombre').value
+    const password = document.querySelector('#password').value
+
+    if(nombre === '' || password === ''){
+        console.log('Todos los campos son obligatorios')
+    }else{
+        console.log('todo bien, iniciando sesión')
+    }
+})
+
+
+
+
+/******************************* VALIDANDO FORMULARIO & MOSTRANDO ALERTAS ****************************************/
+
+
+
+
+const formulario = document.querySelector('#formulario')
+formulario.addEventListener('submit', (e) =>{
+    e.preventDefault()
+  
+    //seleccionamos su contenido para luego generar la alerta
+    const nombre = document.querySelector('#nombre').value
+    const password = document.querySelector('#password').value
+
+
+    //prevenir nuevas y multiples alertas de forma que si ya existe, la quitamos
+    const alertaPrevia = document.querySelector('.alerta')
+    alertaPrevia?.remove()
+
+    //creamos nuestra alerta
+    const alerta = document.createElement('DIV') 
+
+    //le agregamos las classes
+    alerta.classList.add('classe1', 'text-black', 'uppercase', 'text-center', 'font-black') 
+
+
+    //generamos nuestras alertas
+    if(nombre === '' || password === ''){ 
+        alerta.textContent = 'Todos los campos son obligatorios'
+        alerta.classList.add('bg-red-500')
+    }else{
+        alerta.textContent = 'Todo bien, iniciando sesión' //en caso correcto, mensaje de color verde
+        alerta.classList.add('bg-green-500')
+    }
+
+    //para visualizarlo en html, no consola, creamos un hijo de formulario que es lo que hemos creado
+    formulario.appendChild(alerta) 
+
+    setTimeout(() => {
+        alerta.remove()
+    }, 3000);
+})
+
+
+
+// WEB EVENTOS -> CLICK, INPUT, ETC..
+https://developer.mozilla.org/es/docs/Web/API/Element
